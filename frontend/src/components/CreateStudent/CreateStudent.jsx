@@ -29,7 +29,7 @@ function CreateStudent() {
 
     // Example: Send data to the backend API to create a new student
     try {
-      const response = await fetch("http://localhost:4000/students", {
+      const response = await fetch("hthttps://studentmgt-backend.onrender.com/students", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Table, Button, Modal, Alert, InputGroup, FormControl  } from "react-bootstrap";
-import { BsSearch } from "react-icons/bs";
+import { Container, Row, Col, Table, Button, Modal, Alert  } from "react-bootstrap";
+// import { BsSearch } from "react-icons/bs";
 import "./Home.css"; // Import CSS file for animations
 
 function Home() {
@@ -32,7 +32,7 @@ function Home() {
   const fetchStudents = async () => {
     // Fetch students from server
     try {
-      const response = await fetch("http://localhost:4000/students");
+      const response = await fetch("https://studentmgt-backend.onrender.com/students");
       if (response.ok) {
         const data = await response.json();
         setStudents(data);
@@ -59,7 +59,7 @@ function Home() {
 
   const handleConfirmDelete = async () => {
     try {
-      await fetch(`http://localhost:4000/students/${studentIdToDelete}`, {
+      await fetch(`https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`, {
         method: "DELETE",
       });
       setDeletionSuccess(true);

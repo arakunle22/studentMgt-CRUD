@@ -19,7 +19,7 @@ const UpdateStudent = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/students/${id}`);
+        const response = await fetch(`https://studentmgt-backend.onrender.com/students/${id}`);
         if (!response.ok) {
           throw new Error("Student not found.");
         }
@@ -43,7 +43,7 @@ const UpdateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:4000/students/${id}`, {
+      const response = await fetch(`https://studentmgt-backend.onrender.com/students/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

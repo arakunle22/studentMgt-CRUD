@@ -135,6 +135,6 @@ app.delete("/students/:id", async (req, res) => {
   }
 });
 
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`listening on port: ${port}`));
 
-
-app.listen(4000, () => console.log("Server on localport:4000"));
