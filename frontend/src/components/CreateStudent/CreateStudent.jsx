@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -29,13 +29,22 @@ function CreateStudent() {
 
     // Example: Send data to the backend API to create a new student
     try {
-      const response = await fetch("hthttps://studentmgt-backend.onrender.com/students", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, matricno, department, coursecode, score }),
-      });
+      const response = await fetch(
+        "https://studentmgt-backend.onrender.com/students",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            matricno,
+            department,
+            coursecode,
+            score,
+          }),
+        }
+      );
 
       if (response.ok) {
         // Student created successfully
@@ -52,11 +61,17 @@ function CreateStudent() {
   };
 
   return (
-    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
-      <Container className="w-75 bg-white rounded container-fluid text-left p-4">
-        <h2>Create New Student</h2>
+    <div className="d-flex vh-100 bg-light justify-content-center align-items-center">
+      <Container className="w-75 bg-white rounded container-fluid my-5 text-left p-4">
+        <div className="bg-success p-2 rounded text-center mb-4">
+          <h2 className="text-white">Create New Student</h2>
+        </div>
         {errorMessage && (
-          <Alert variant="danger" onClose={() => setErrorMessage("")} dismissible>
+          <Alert
+            variant="danger"
+            onClose={() => setErrorMessage("")}
+            dismissible
+          >
             {errorMessage}
           </Alert>
         )}
@@ -66,7 +81,7 @@ function CreateStudent() {
           </Alert>
         )}
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formName">
+          <Form.Group controlId="formName" className="my-2">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
@@ -76,7 +91,7 @@ function CreateStudent() {
               required
             />
           </Form.Group>
-          <Form.Group controlId="formMatricNo">
+          <Form.Group controlId="formMatricNo" className="my-2">
             <Form.Label>Matriculation Number</Form.Label>
             <Form.Control
               type="text"
@@ -86,7 +101,7 @@ function CreateStudent() {
               required
             />
           </Form.Group>
-          <Form.Group controlId="formDepartment">
+          <Form.Group controlId="formDepartment" className="my-2">
             <Form.Label>Department</Form.Label>
             <Form.Control
               type="text"
@@ -96,7 +111,7 @@ function CreateStudent() {
               required
             />
           </Form.Group>
-          <Form.Group controlId="formCourseCode">
+          <Form.Group controlId="formCourseCode" className="my-2">
             <Form.Label>Course Code</Form.Label>
             <Form.Control
               type="text"
@@ -106,7 +121,7 @@ function CreateStudent() {
               required
             />
           </Form.Group>
-          <Form.Group controlId="formScore">
+          <Form.Group controlId="formScore" className="my-2">
             <Form.Label>Score</Form.Label>
             <Form.Control
               type="text"
@@ -116,9 +131,11 @@ function CreateStudent() {
               required
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Create
-          </Button>
+          <Container className="d-grid col-12 mx-auto my-3">
+            <Button variant="outline-success" className="my-2" type="submit">
+              Create
+            </Button>
+          </Container>
         </Form>
       </Container>
     </div>

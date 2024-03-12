@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Table, Button, Modal, Alert  } from "react-bootstrap";
-// import { BsSearch } from "react-icons/bs";
-import "./Home.css"; // Import CSS file for animations
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Button,
+  Modal,
+  Alert,
+  Form,
+} from "react-bootstrap";
 
 function Home() {
   const [students, setStudents] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [studentIdToDelete, setStudentIdToDelete] = useState(null);
   const [deletionSuccess, setDeletionSuccess] = useState(false);
-  // eslint-disable-next-line
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State to control visibility of success message
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // Added state for success message
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchStudents();
   }, [deletionSuccess]);
+
+  useEffect(() => {
+    // Filter students based on search query
+    const filteredStudents = students.filter((student) => {
+      return (
+        student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.matricno.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
+    setSearchResults(filteredStudents);
+  }, [searchQuery, students]);
 
   useEffect(() => {
     // Show success message for 3 seconds after deletion success
@@ -32,7 +51,9 @@ function Home() {
   const fetchStudents = async () => {
     // Fetch students from server
     try {
-      const response = await fetch("https://studentmgt-backend.onrender.com/students");
+      const response = await fetch(
+        "https://studentmgt-backend.onrender.com/students"
+      );
       if (response.ok) {
         const data = await response.json();
         setStudents(data);
@@ -59,9 +80,12 @@ function Home() {
 
   const handleConfirmDelete = async () => {
     try {
-      await fetch(`https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
       setDeletionSuccess(true);
     } catch (error) {
       console.error("Error deleting student:", error);
@@ -69,29 +93,57 @@ function Home() {
     setShowConfirmation(false);
   };
 
+  const handleLogout = () => {
+    // Implement logout functionality here, such as clearing authentication tokens or session data
+    // Then redirect the user back to the login page
+    navigate("/");
+  };
+
   return (
-    <div className="d-flex flex-column min-vh-100 bg-primary justify-content-center align-items-center">
-      <Container className="w-100 bg-white rounded container-fluid text-left p-4">
-        
-      {/* Deletion Success Message */}
-      {deletionSuccess && (
-        <Alert variant="success" lassName="position-absolute top-0 start-50 translate-middle-x" style={{ zIndex: 999 }}>
-          Student deleted successfully.
-        </Alert>
-      )}
-        <Row style={{ textAlign: "left", marginBottom: "20px" }}>
-          <Col>
-          <Button variant="success" onClick={handleAddClick}>
-            Add +
-          </Button>
+    <div className="d-flex flex-column min-vh-100 bg-light justify-content-center align-items-center">
+      <Container className="w-100 bg-white rounded container-fluid text-left my-5 mx-2 p-4">
+        {showSuccessMessage && ( // Added the condition to display success message
+          <Alert variant="success">Student deleted successfully.</Alert>
+        )}
+        <Row className="justify-content-between align-items-center mb-3">
+          <Col xs="auto">
+            <Button variant="success" onClick={handleAddClick}>
+              Add +
+            </Button>
           </Col>
-          <Col>
-          {/* Search Bar to Get A student by Matric Number or Name */}
-         
+
+          <Col xs="auto">
+            <Button variant="secondary" onClick={handleLogout}>
+              Logout
+            </Button>
           </Col>
         </Row>
+
+        <Row className="justify-content-between align-items-center mb-4">
+          <Col xs={3}>
+            <div></div>{" "}
+            {/* This empty div ensures that the search bar is on the left */}
+          </Col>
+          <Col xs={12} sm={6}>
+            <Form.Control
+              className="mx-auto" // Add mx-auto class to center the search bar horizontally
+              type="text"
+              placeholder="Search by Name or Matric No"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </Col>
+          <Col xs={3}>
+            <div></div>{" "}
+            {/* This empty div ensures that the search bar is on the right */}
+          </Col>
+        </Row>
+
+        {searchResults.length === 0 && ( // Render text if search results are empty
+          <p>No results found.</p>
+        )}
         <div className="container-fluid" style={{ overflowX: "auto" }}>
-          <Table striped bordered hover>
+          <Table striped bordered hover className="text-center">
             <thead>
               <tr>
                 <th>Name</th>
@@ -103,24 +155,25 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {students.map((student) => (
+              {searchResults.map((student) => (
                 <tr key={student.id} className="fade-in">
                   <td>{student.name}</td>
                   <td>{student.matricno}</td>
                   <td>{student.department}</td>
                   <td>{student.coursecode}</td>
                   <td>{student.score}</td>
-                  <td>
+                  <td className="">
                     <Button
                       variant="warning"
                       onClick={() => handleUpdateClick(student.id)}
+                      className="mx-2 my-2"
                     >
                       Update
                     </Button>
                     <Button
                       variant="danger"
-                      className="ms-2"
-                      onClick={() => handleDeleteClick(student.id)} // Call handleDeleteClick on click
+                      className="mx-1"
+                      onClick={() => handleDeleteClick(student.id)}
                     >
                       Delete
                     </Button>
@@ -139,7 +192,10 @@ function Home() {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this student?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConfirmation(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmation(false)}
+          >
             Cancel
           </Button>
           <Button variant="danger" onClick={handleConfirmDelete}>
