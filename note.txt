@@ -1,65 +1,260 @@
-const express = require("express");
-const { Sequelize, DataTypes } = require("sequelize");
-require("dotenv").config();
+// Import required modules
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const { Pool } = require('pg');
 
+// Create express app
 const app = express();
-const port = process.env.PORT || 4090;
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
 
-// Sequelize setup
-const sequelize = new Sequelize(process.env.DB_URL, {
-  dialect: "postgres",
-  logging: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
+// Middleware
+app.use(bodyParser.json());
+
+// Create a PostgreSQL pool
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: { rejectUnauthorized: false } // This is required if you're using a self-signed certificate
 });
-
-// Define the User model
-const User = sequelize.define("user", {
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
-
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database connection has been established successfully.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
 
 // Login route
-app.post("/api/login", async (req, res) => {
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
+    // Query to find user by email and password
+    const query = {
+      text: 'SELECT * FROM users WHERE email = $1 AND password = $2',
+      values: [email, password]
+    };
+
+    // Execute the query
+    const result = await pool.query(query);
+
+    // Check if user exists
+    if (result.rows.length > 0) {
+      res.status(200).json({ message: 'Login successful' });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
     }
-    // Check if password matches
-    if (password !== user.password) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-    // If email and password are correct, send success response
-    res.status(200).json({ message: "Login successful" });
   } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error executing query:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import axios from "axios";
+import { BsEnvelope, BsLock, BsFillPersonFill } from "react-icons/bs";
+import imageSrc from "../images/login.jpg";
+
+function Login({ history }) { // Access history object through props
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+    try {
+      const response = await axios.post("/api/login", { email, password });
+      console.log(response.data);
+      // Handle successful login, such as redirecting to another page
+      history.push("/Home"); // Redirect to home page
+    } catch (error) {
+      console.error(error.response.data);
+      setError("Invalid email or password");
+    }
+  };
+
+  return (
+    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
+      <Container className="w-100 bg-white rounded container p-4">
+        <Row className="align-items-center">
+          <Col xs={12} sm={6} md={6} lg={6}>
+            <img src={imageSrc} alt="login img" className="img-fluid" />
+          </Col>
+          <Col xs={12} sm={6} md={6} lg={6} style={{ textAlign: "left" }}>
+            <div className="text-center mb-5">
+              <BsFillPersonFill
+                size={64}
+                className="mb-2"
+                style={{ color: "Blue" }}
+              />
+              <h2>Login</h2>
+            </div>
+            <form onSubmit={handleLogin}>
+              <div className="form-group mb-5">
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <BsEnvelope />
+                  </span>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-group mb-3">
+                <div className="input-group">
+                  <span className="input-group-text">
+                    <BsLock />
+                  </span>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-group form-check mb-3">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="rememberMe"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+                <label
+                  className="form-check-label text-left"
+                  htmlFor="rememberMe"
+                >
+                  Remember Me
+                </label>
+              </div>
+              {error && <div className="text-danger mb-3">{error}</div>}
+              <button type="submit" className="btn btn-primary w-100">
+                Submit
+              </button>
+            </form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+}
+
+export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+new:
+
+// Import required modules
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const { Pool } = require('pg');
+const cors = require('cors'); // Import cors package
+
+// Create express app
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors()); // Use cors middleware
+app.use(bodyParser.json());
+
+// Create a PostgreSQL pool
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: { rejectUnauthorized: false } // This is required if you're using a self-signed certificate
+});
+
+// Login route
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Query to find user by email and password
+    const query = {
+      text: 'SELECT * FROM users WHERE email = $1 AND password = $2',
+      values: [email, password]
+    };
+
+    // Execute the query
+    const result = await pool.query(query);
+
+    // Check if user exists
+    if (result.rows.length > 0) {
+      res.status(200).json({ message: 'Login successful' });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
+    }
+  } catch (error) {
+    console.error('Error executing query:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

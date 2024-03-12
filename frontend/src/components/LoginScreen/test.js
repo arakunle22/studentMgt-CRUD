@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { BsFillPersonFill } from "react-icons/bs";
+import { BsEnvelope, BsLock, BsFillPersonFill } from "react-icons/bs";
 import imageSrc from "../images/login.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,15 +23,12 @@ const Login = () => {
       navigate("/home");
     } else {
       const errorMessage = await response.text(); // Get the error message from the response
-      setError(errorMessage);
+      alert(`Login failed: ${errorMessage}`);
     }
   };
 
   return (
-    <Container
-      fluid
-      className="d-flex flex-column min-vh-100 bg-primary justify-content-center align-items-center p-4"
-    >
+    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
       <Container className="w-100 bg-white rounded container p-4">
         <Row className="align-items-center">
           <Col xs={12} sm={6} md={6} lg={6}>
@@ -47,7 +43,6 @@ const Login = () => {
               />
               <h2>Login</h2>
             </div>
-            {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -58,7 +53,6 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                {/* Validation message */}
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword">
@@ -70,7 +64,6 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {/* Validation message */}
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit
@@ -79,7 +72,7 @@ const Login = () => {
           </Col>
         </Row>
       </Container>
-    </Container>
+    </div>
   );
 };
 
