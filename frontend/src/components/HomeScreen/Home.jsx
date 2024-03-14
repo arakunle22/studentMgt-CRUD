@@ -40,7 +40,9 @@ function Home() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("https://studentmgt-backend.onrender.com/students");
+      const response = await fetch(
+        "https://studentmgt-backend.onrender.com/students"
+      );
       if (response.ok) {
         const data = await response.json();
         setStudents(data);
@@ -67,9 +69,12 @@ function Home() {
 
   const handleConfirmDelete = async () => {
     try {
-      await fetch(`https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
       setDeletionSuccess(true);
     } catch (error) {
       console.error("Error deleting student:", error);
@@ -85,12 +90,12 @@ function Home() {
     <div className="d-flex flex-column min-vh-100 bg-light justify-content-center align-items-center">
       <Container className="w-100 bg-white rounded container-fluid text-left my-3 mx-2 p-4">
         <div className="bg-success mb-4 rounded">
-          <h1 className="text-center text-white mt-3 p-2">
+          <h1 className="text-center text-white mt-3 mb-5 p-4">
             Welcome to Student Information Management System
           </h1>
         </div>
 
-        <Row className="justify-content-between align-items-center mb-3">
+        <Row className="justify-content-between align-items-center mb-5">
           <Col xs="auto">
             <Button variant="outline-success" onClick={handleAddClick}>
               Add Student +
@@ -104,7 +109,7 @@ function Home() {
           </Col>
         </Row>
 
-        <Row className="justify-content-between align-items-center mb-4">
+        <Row className="justify-content-between align-items-center mb-5">
           <Col xs={3}>
             <div></div>{" "}
             {/* This empty div ensures that the search bar is on the left */}
@@ -201,7 +206,7 @@ function Home() {
           </Col>
         </Row>
         {/* End Footer Section */}
-        
+
         <Modal
           show={showConfirmation}
           onHide={() => setShowConfirmation(false)}
