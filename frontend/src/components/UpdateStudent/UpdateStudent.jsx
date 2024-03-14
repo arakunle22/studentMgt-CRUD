@@ -31,7 +31,7 @@ const UpdateStudent = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:8190/students/${id}`
+          `https://studentmgt-backend.onrender.com/students/${id}`
         );
         if (!response.ok) {
           throw new Error("Student not found.");
@@ -66,7 +66,7 @@ const UpdateStudent = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8190/students/${id}`,
+        `https://studentmgt-backend.onrender.com/students/${id}`,
         {
           method: "PUT",
           headers: {

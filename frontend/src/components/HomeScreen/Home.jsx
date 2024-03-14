@@ -40,7 +40,7 @@ function Home() {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("http://localhost:8190/students");
+      const response = await fetch("https://studentmgt-backend.onrender.com/students");
       if (response.ok) {
         const data = await response.json();
         setStudents(data);
@@ -67,7 +67,7 @@ function Home() {
 
   const handleConfirmDelete = async () => {
     try {
-      await fetch(`http://localhost:8190/students/${studentIdToDelete}`, {
+      await fetch(`https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`, {
         method: "DELETE",
       });
       setDeletionSuccess(true);
