@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Container, Modal } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Alert,
+  Container,
+  Modal,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateStudent = () => {
@@ -92,12 +100,13 @@ const UpdateStudent = () => {
       );
       if (response.ok) {
         setSuccessMessage(
-          "Student updated successfully. Redirecting to home page..."
-        ); // Set success message on successful update
-        setShowModal(true); // Show modal on success
+          "Student updated successfully. Redirecting to Student details page..."
+        );
+        setShowModal(true);
         setTimeout(() => {
-          navigate("/home");
-        }, 3000); // Navigate to home page after 3 seconds
+          // Navigate to the Student Details page of the updated student
+          navigate(`/student/${id}`);
+        }, 3000);
       } else {
         const errorMessage = await response.text();
         setError(`Failed to update student: ${errorMessage}`);
@@ -108,14 +117,25 @@ const UpdateStudent = () => {
     }
   };
 
+  const handleHome = () => {
+    navigate("/home");
+  };
+
   return (
     <div className="d-flex  bg-light justify-content-center align-items-center">
       <Container className="w-75 bg-white rounded container-fluid text-left p-4">
+        <Button
+          variant="outline-light"
+          onClick={handleHome}
+          className="mx-2 my-2 text-black"
+        >
+          Home
+        </Button>
         <div className="bg-success p-2 rounded text-center mb-4">
           <h2 className="text-white">Update Student</h2>
         </div>
         {error && <Alert variant="danger">{error}</Alert>}
-         <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formName" className="my-2">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -174,208 +194,221 @@ const UpdateStudent = () => {
             <>
               {/* Science related fields */}
               <Form.Group controlId="formMath" className="my-2">
-            <Form.Label>Math</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter math score"
-              value={math}
-              onChange={(e) => setMath(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEnglish" className="my-2">
-            <Form.Label>English</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter English score"
-              value={english}
-              onChange={(e) => setEnglish(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBiology" className="my-2">
-            <Form.Label>Biology</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Biology score"
-              value={biology}
-              onChange={(e) => setBiology(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEconomics" className="my-2">
-            <Form.Label>Economics</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Economics score"
-              value={economics}
-              onChange={(e) => setEconomics(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formChemistry" className="my-2">
-            <Form.Label>Chemistry</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Chemistry score"
-              value={chemistry}
-              onChange={(e) => setChemistry(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formPhysics" className="my-2">
-            <Form.Label>Physics</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Physics score"
-              value={physics}
-              onChange={(e) => setPhysics(e.target.value)}
-              required
-            />
-          </Form.Group>
+                <Form.Label>Math</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter math score"
+                  value={math}
+                  onChange={(e) => setMath(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEnglish" className="my-2">
+                <Form.Label>English</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter English score"
+                  value={english}
+                  onChange={(e) => setEnglish(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formBiology" className="my-2">
+                <Form.Label>Biology</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Biology score"
+                  value={biology}
+                  onChange={(e) => setBiology(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEconomics" className="my-2">
+                <Form.Label>Economics</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Economics score"
+                  value={economics}
+                  onChange={(e) => setEconomics(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formChemistry" className="my-2">
+                <Form.Label>Chemistry</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Chemistry score"
+                  value={chemistry}
+                  onChange={(e) => setChemistry(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formPhysics" className="my-2">
+                <Form.Label>Physics</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Physics score"
+                  value={physics}
+                  onChange={(e) => setPhysics(e.target.value)}
+                  required
+                />
+              </Form.Group>
             </>
           )}
           {department === "Commercial" && (
             <>
               {/* Commercial related fields */}
               <Form.Group controlId="formMath" className="my-2">
-            <Form.Label>Math</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter math score"
-              value={math}
-              onChange={(e) => setMath(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEnglish" className="my-2">
-            <Form.Label>English</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter English score"
-              value={english}
-              onChange={(e) => setEnglish(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBiology" className="my-2">
-            <Form.Label>Biology</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Biology score"
-              value={biology}
-              onChange={(e) => setBiology(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEconomics" className="my-2">
-            <Form.Label>Economics</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Economics score"
-              value={economics}
-              onChange={(e) => setEconomics(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formAccount" className="my-2">
-            <Form.Label>Account</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Account score"
-              value={account}
-              onChange={(e) => setAccount(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formCommerce" className="my-2">
-            <Form.Label>Commerce</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Commerce score"
-              value={commerce}
-              onChange={(e) => setCommerce(e.target.value)}
-              required
-            />
-          </Form.Group>
-
+                <Form.Label>Math</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter math score"
+                  value={math}
+                  onChange={(e) => setMath(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEnglish" className="my-2">
+                <Form.Label>English</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter English score"
+                  value={english}
+                  onChange={(e) => setEnglish(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formBiology" className="my-2">
+                <Form.Label>Biology</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Biology score"
+                  value={biology}
+                  onChange={(e) => setBiology(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEconomics" className="my-2">
+                <Form.Label>Economics</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Economics score"
+                  value={economics}
+                  onChange={(e) => setEconomics(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formAccount" className="my-2">
+                <Form.Label>Account</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Account score"
+                  value={account}
+                  onChange={(e) => setAccount(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formCommerce" className="my-2">
+                <Form.Label>Commerce</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Commerce score"
+                  value={commerce}
+                  onChange={(e) => setCommerce(e.target.value)}
+                  required
+                />
+              </Form.Group>
             </>
           )}
           {department === "Art" && (
             <>
               {/* Art related fields */}
               <Form.Group controlId="formMath" className="my-2">
-            <Form.Label>Math</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter math score"
-              value={math}
-              onChange={(e) => setMath(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEnglish" className="my-2">
-            <Form.Label>English</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter English score"
-              value={english}
-              onChange={(e) => setEnglish(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBiology" className="my-2">
-            <Form.Label>Biology</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Biology score"
-              value={biology}
-              onChange={(e) => setBiology(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formEconomics" className="my-2">
-            <Form.Label>Economics</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Economics score"
-              value={economics}
-              onChange={(e) => setEconomics(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formGovernment" className="my-2">
-            <Form.Label>Government</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Government score"
-              value={government}
-              onChange={(e) => setGovernment(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formLiterature" className="my-2">
-            <Form.Label>Literature</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Literature score"
-              value={literature}
-              onChange={(e) => setLiterature(e.target.value)}
-              required
-            />
-          </Form.Group>
+                <Form.Label>Math</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter math score"
+                  value={math}
+                  onChange={(e) => setMath(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEnglish" className="my-2">
+                <Form.Label>English</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter English score"
+                  value={english}
+                  onChange={(e) => setEnglish(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formBiology" className="my-2">
+                <Form.Label>Biology</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Biology score"
+                  value={biology}
+                  onChange={(e) => setBiology(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formEconomics" className="my-2">
+                <Form.Label>Economics</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Economics score"
+                  value={economics}
+                  onChange={(e) => setEconomics(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formGovernment" className="my-2">
+                <Form.Label>Government</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Government score"
+                  value={government}
+                  onChange={(e) => setGovernment(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formLiterature" className="my-2">
+                <Form.Label>Literature</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Literature score"
+                  value={literature}
+                  onChange={(e) => setLiterature(e.target.value)}
+                  required
+                />
+              </Form.Group>
             </>
           )}
 
           {/* Add more Form.Group components for other fields */}
 
-
           <Container className="d-grid col-12 mx-auto my-3">
             <Button variant="outline-success" className="my-2" type="submit">
-              Create
+              Update Student
             </Button>
           </Container>
         </Form>
+        {/* Footer Section */}
+        <Row className="bg-success text-white text-center p-3 mt-5 justify-content-around align-items-center ">
+          <Col xs={12} lg={3}>
+            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
+          </Col>
+          <Col xs={12} lg={3}>
+            <p>
+              Matric Number: 190115010 <br /> Copyright © 2024
+            </p>
+          </Col>
+          <Col xs={12} lg={3}>
+            <p>Department: Science and Technology (Computer option)</p>
+          </Col>
+        </Row>
+        {/* End Footer Section */}
 
         {/* Modal for Success Message */}
         <Modal

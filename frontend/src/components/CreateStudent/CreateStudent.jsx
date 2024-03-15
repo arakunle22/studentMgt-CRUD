@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Alert, Modal, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Modal,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function CreateStudent() {
@@ -41,28 +49,31 @@ function CreateStudent() {
 
     // Example: Send data to the backend API to create a new student
     try {
-      const response = await fetch("https://studentmgt-backend.onrender.com/students", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          class_name,
-          department,
-          term,
-          math,
-          english,
-          biology,
-          economics,
-          chemistry,
-          physics,
-          account,
-          commerce,
-          government,
-          literature,
-        }),
-      });
+      const response = await fetch(
+        "https://studentmgt-backend.onrender.com/students",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            class_name,
+            department,
+            term,
+            math,
+            english,
+            biology,
+            economics,
+            chemistry,
+            physics,
+            account,
+            commerce,
+            government,
+            literature,
+          }),
+        }
+      );
 
       if (response.ok) {
         // Student created successfully
@@ -77,10 +88,20 @@ function CreateStudent() {
       setErrorMessage("Error creating student. Please try again later.");
     }
   };
+  const handleHome = () => {
+    navigate("/home");
+  };
 
   return (
     <div className="d-flex  bg-light justify-content-center align-items-center">
       <Container className="w-75 bg-white rounded container-fluid my-5 text-left p-4">
+      <Button
+          variant="outline-light"
+          onClick={handleHome}
+          className="mx-2 my-2 text-black"
+        >
+          Home
+        </Button>
         <div className="bg-success p-2 rounded text-center mb-4">
           <h2 className="text-white">Create New Student</h2>
         </div>
@@ -93,7 +114,7 @@ function CreateStudent() {
             {errorMessage}
           </Alert>
         )}
-       <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formName" className="my-2">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -352,14 +373,14 @@ function CreateStudent() {
             </Button>
           </Container>
         </Form>
-  {/* Footer Section */}
-  <Row className="bg-light  text-center p-3 mt-5 justify-content-around align-items-center ">
+        {/* Footer Section */}
+        <Row className="bg-success text-white text-center p-3 mt-5 justify-content-around align-items-center ">
           <Col xs={12} lg={3}>
-            <p className="fw-bold">Created by - Miss Tobilola</p>
+            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
           </Col>
           <Col xs={12} lg={3}>
             <p>
-              Matric Number: 190115028 <br /> Copyright © 2024
+              Matric Number: 190115010 <br /> Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>

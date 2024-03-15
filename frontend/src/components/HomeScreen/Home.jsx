@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -14,7 +15,7 @@ import {
 function Home() {
   const [students, setStudents] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [studentIdToDelete, setStudentIdToDelete] = useState(null);
+  // const [studentIdToDelete, setStudentIdToDelete] = useState(null);
   const [deletionSuccess, setDeletionSuccess] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -58,29 +59,29 @@ function Home() {
     navigate("/CreateStudent");
   };
 
-  const handleUpdateClick = (id) => {
-    navigate(`/UpdateStudent/${id}`);
-  };
+  // const handleUpdateClick = (id) => {
+  //   navigate(`/UpdateStudent/${id}`);
+  // };
 
-  const handleDeleteClick = (id) => {
-    setStudentIdToDelete(id);
-    setShowConfirmation(true);
-  };
+  // const handleDeleteClick = (id) => {
+  //   setStudentIdToDelete(id);
+  //   setShowConfirmation(true);
+  // };
 
-  const handleConfirmDelete = async () => {
-    try {
-      await fetch(
-        `https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`,
-        {
-          method: "DELETE",
-        }
-      );
-      setDeletionSuccess(true);
-    } catch (error) {
-      console.error("Error deleting student:", error);
-    }
-    setShowConfirmation(false);
-  };
+  // const handleConfirmDelete = async () => {
+  //   try {
+  //     await fetch(
+  //       `https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`,
+  //       {
+  //         method: "DELETE",
+  //       }
+  //     );
+  //     setDeletionSuccess(true);
+  //   } catch (error) {
+  //     console.error("Error deleting student:", error);
+  //   }
+  //   setShowConfirmation(false);
+  // };
 
   const handleLogout = () => {
     navigate("/");
@@ -95,7 +96,7 @@ function Home() {
           </h1>
         </div>
 
-        <Row className="justify-content-between align-items-center mb-5">
+        <Row className="justify-content-between align-items-center mb-4">
           <Col xs="auto">
             <Button variant="outline-success" onClick={handleAddClick}>
               Add Student +
@@ -132,14 +133,14 @@ function Home() {
         {searchResults.length === 0 && ( // Render text if search results are empty
           <p>No results found.</p>
         )}
-        <div className="container-fluid" style={{ overflowX: "auto" }}>
+        <div className="container w-100" style={{ overflowX: "auto" }}>
           <Table striped bordered hover className="text-center">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Class</th>
                 <th>Department</th>
-                <th>Term</th>
+                {/* <th>Term</th>
                 <th>Math Score</th>
                 <th>English Score</th>
                 <th>Biology Score</th>
@@ -150,16 +151,23 @@ function Home() {
                 <th>Commerce Score</th>
                 <th>Government Score</th>
                 <th>Literature Score</th>
-                <th>Action</th>
+                <th>Action</th> */}
               </tr>
             </thead>
             <tbody>
               {searchResults.map((student) => (
                 <tr key={student.id} className="fade-in">
-                  <td>{student.name}</td>
+                  <td>
+                    <Link
+                      className="btn btn-outline-light text-black"
+                      to={`/student/${student.id}`}
+                    >
+                      {student.name}
+                    </Link>
+                  </td>
                   <td>{student.class_name}</td>
                   <td>{student.department}</td>
-                  <td>{student.term}</td>
+                  {/* <td>{student.term}</td>
                   <td>{student.math}</td>
                   <td>{student.english}</td>
                   <td>{student.biology}</td>
@@ -185,7 +193,7 @@ function Home() {
                     >
                       Delete
                     </Button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
@@ -194,11 +202,11 @@ function Home() {
         {/* Footer Section */}
         <Row className="bg-light  text-center p-3 mt-5 justify-content-around align-items-center ">
           <Col xs={12} lg={3}>
-            <p className="fw-bold">Created by - Miss Tobilola</p>
+            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
           </Col>
           <Col xs={12} lg={3}>
             <p>
-              Matric Number: 190115028 <br /> Copyright © 2024
+              Matric Number: 190115010 <br /> Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>
@@ -223,9 +231,9 @@ function Home() {
             >
               Cancel
             </Button>
-            <Button variant="danger" onClick={handleConfirmDelete}>
+            {/* <Button variant="danger" onClick={handleConfirmDelete}>
               Delete
-            </Button>
+            </Button> */}
           </Modal.Footer>
         </Modal>
 
