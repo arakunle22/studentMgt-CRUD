@@ -27,13 +27,11 @@ function Home() {
 
   useEffect(() => {
     const filteredStudents = students.filter((student) => {
-      const { name, class_name, department } = student;
+      const { name, class_name } = student;
       return (
         (name && name.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (class_name &&
-          class_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (department &&
-          department.toLowerCase().includes(searchQuery.toLowerCase()))
+          class_name.toLowerCase().includes(searchQuery.toLowerCase())) 
       );
     });
     setSearchResults(filteredStudents);
@@ -119,7 +117,7 @@ function Home() {
             <Form.Control
               className="mx-auto" // Add mx-auto class to center the search bar horizontally
               type="text"
-              placeholder="Search by Name, Class or Department"
+              placeholder="Search by Student Name or Class"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -137,9 +135,10 @@ function Home() {
           <Table striped bordered hover className="text-center">
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Class</th>
-                <th>Department</th>
+                {/* <th>Department</th> */}
                 {/* <th>Term</th>
                 <th>Math Score</th>
                 <th>English Score</th>
@@ -156,17 +155,20 @@ function Home() {
             </thead>
             <tbody>
               {searchResults.map((student) => (
+                
                 <tr key={student.id} className="fade-in">
+                  <td>{student.id}</td>
                   <td>
                     <Link
                       className="btn btn-outline-light text-black"
                       to={`/student/${student.id}`}
-                    >
+                    ><b>
                       {student.name}
+                      </b>
                     </Link>
                   </td>
                   <td>{student.class_name}</td>
-                  <td>{student.department}</td>
+                  {/* <td>{student.department}</td> */}
                   {/* <td>{student.term}</td>
                   <td>{student.math}</td>
                   <td>{student.english}</td>

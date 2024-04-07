@@ -7,6 +7,7 @@ import Home from "./components/HomeScreen/Home";
 import CreateStudent from "./components/CreateStudent/CreateStudent";
 import UpdateStudent from "./components/UpdateStudent/UpdateStudent";
 import StudentDetails from "./components/UpdateStudent/StudentDetails";
+import StudentReport from "./components/UpdateStudent/StudentReport";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/CreateStudent" element={<CreateStudent />} />
         <Route path="/UpdateStudent/:id" element={<UpdateStudent />} />
         <Route path="/student/:id" element={<StudentDetails />} />
+        <Route path="/studentReport/:id" element={<StudentReport />} />
       </Routes>
     </Router>
   );
