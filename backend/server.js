@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
 require("dotenv").config();
+// const pool = require("./database"); // Make sure this path is correct
 
 const pool = new Pool({
   connectionString: process.env.DB_URL,
@@ -18,13 +19,11 @@ app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    console.error("Validation error: Missing email or password in request body.");
     return res.status(400).send("Email and password are required.");
   }
 
-  console.log("Login attempt:");
-  console.log(`Email: ${email}`);
-  console.log(`Password: ${password}`); // For debugging only. Avoid logging sensitive info like passwords in production.
+  console.log("Username:" + email);
+  console.log("Password:" + password);
 
   const selectUser = `SELECT * FROM users WHERE email = $1 AND password = $2`;
   const values = [email, password];
@@ -33,24 +32,18 @@ app.post("/login", (req, res) => {
     .query(selectUser, values)
     .then((response) => {
       if (response.rows.length > 0) {
-        console.log("Login successful for user:", email);
+        // User exists, login successful
         res.send("Login successful.");
       } else {
-        console.warn("Invalid login attempt:", email);
+        // User not found, login failed
         res.status(401).send("Invalid email or password.");
       }
     })
     .catch((err) => {
-      console.error("Database query error:", {
-        message: err.message,
-        stack: err.stack,
-        query: selectUser,
-        values,
-      });
+      console.error(`Error querying database: ${err}`);
       res.status(500).send("Error logging in.");
     });
 });
-
 
 // Get all Student route
 
