@@ -68,3 +68,45 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## DOTENV EXAMPLE
+# Server port
+PORT=4000
+
+# Render PostgreSQL Database URL (use the internal URL for Render-hosted apps)
+DB_URL=postgres://<username>:<password>@<host>:<port>/<database_name>
+
+
+
+-- Create the users table 
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+-- Create the student_data table
+CREATE TABLE IF NOT EXISTS student_data (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  class_name VARCHAR(255),
+  department VARCHAR(255),
+  term VARCHAR(255),
+  math INTEGER,
+  english INTEGER,
+  biology INTEGER,
+  economics INTEGER,
+  chemistry INTEGER,
+  physics INTEGER,
+  account INTEGER,
+  commerce INTEGER,
+  government INTEGER,
+  literature INTEGER
+);
+
+
+-- Insert a default admin user (just for testing purposes)
+INSERT INTO users (email, password)
+VALUES ('admin@example.com', 'adminpassword');
+
