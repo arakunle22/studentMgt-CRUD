@@ -39,34 +39,6 @@ function StudentReport() {
     navigate("/");
   };
 
-  //   const handleHome = () => {
-  //     navigate("/home");
-  //   };
-
-  //   const handleUpdateClick = () => {
-  //     navigate(`/UpdateStudent/${id}`);
-  //   };
-
-  //   const handleDeleteClick = () => {
-  //     setShowConfirmation(true);
-  //   };
-
-  //   const handleConfirmDelete = async () => {
-  //     try {
-  //       await fetch(`https://studentmgt-backend.onrender.com/students/${id}`, {
-  //         method: "DELETE",
-  //       });
-  //       setDeletionSuccess(true);
-
-  //       // Redirect to home page after successful deletion
-  //       setTimeout(() => {
-  //         navigate("/logout");
-  //       }, 2000);
-  //     } catch (error) {
-  //       console.error("Error deleting student:", error);
-  //     }
-  //     setShowConfirmation(false);
-  //   };
 
   let totalScore = 0;
   let percentage = 0;
@@ -139,26 +111,7 @@ function StudentReport() {
           </Button>
         </div>
 
-        {/* <Row className="justify-content-between align-items-center mb-4">
-          <Col xs="auto">
-            <Button
-              variant="outline-light"
-              onClick={handleUpdateClick}
-              className="mx-2 my-2 text-black"
-            >
-              Update
-            </Button>
-          </Col>
-
-          <Col xs="auto">
-            <Button
-              variant="outline-danger"
-              onClick={handleDeleteClick}
-            >
-              Delete
-            </Button>
-          </Col>
-        </Row> */}
+      
 
         <div className="container print-section" style={{ overflowX: "auto" }}>
           <Table
@@ -303,52 +256,21 @@ function StudentReport() {
         {/* Footer Section */}
         <Row className="bg-light  text-center p-3 mt-5 justify-content-around align-items-center ">
           <Col xs={12} lg={3}>
-            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
+            <p className="fw-bold">Created by - PeaceCode</p>
           </Col>
           <Col xs={12} lg={3}>
             <p>
-              Matric Number: 190115010 <br /> Copyright © 2024
+               Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>
-            <p>Department: Science and Technology (Computer option)</p>
+            <p>Science and Technology (Computer option)</p>
           </Col>
         </Row>
         {/* End Footer Section */}
       </Container>
 
-      {/* <Modal
-        show={showConfirmation}
-        onHide={() => setShowConfirmation(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Deletion</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this student?</Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowConfirmation(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={handleConfirmDelete}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
-
-      {/* Success Message Modal */}
-      {/* <Modal
-        show={deletionSuccess}
-        onHide={() => setDeletionSuccess(false)}
-        centered
-      >
-        <Modal.Body className="text-center">
-          <Alert variant="success">Student deleted successfully.</Alert>
-        </Modal.Body>
-      </Modal> */}
+     
     </div>
   );
 }

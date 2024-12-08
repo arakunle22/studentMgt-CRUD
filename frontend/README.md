@@ -77,6 +77,7 @@ PORT=4000
 # Render PostgreSQL Database URL (use the internal URL for Render-hosted apps)
 DB_URL=postgres://<username>:<password>@<host>:<port>/<database_name>
 
+Just change the DB_URL in the backend env in render
 
 
 -- Create the users table 
