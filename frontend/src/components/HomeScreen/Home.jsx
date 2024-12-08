@@ -15,7 +15,6 @@ import {
 function Home() {
   const [students, setStudents] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  // const [studentIdToDelete, setStudentIdToDelete] = useState(null);
   const [deletionSuccess, setDeletionSuccess] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -57,29 +56,6 @@ function Home() {
     navigate("/CreateStudent");
   };
 
-  // const handleUpdateClick = (id) => {
-  //   navigate(`/UpdateStudent/${id}`);
-  // };
-
-  // const handleDeleteClick = (id) => {
-  //   setStudentIdToDelete(id);
-  //   setShowConfirmation(true);
-  // };
-
-  // const handleConfirmDelete = async () => {
-  //   try {
-  //     await fetch(
-  //       `https://studentmgt-backend.onrender.com/students/${studentIdToDelete}`,
-  //       {
-  //         method: "DELETE",
-  //       }
-  //     );
-  //     setDeletionSuccess(true);
-  //   } catch (error) {
-  //     console.error("Error deleting student:", error);
-  //   }
-  //   setShowConfirmation(false);
-  // };
 
   const handleLogout = () => {
     navigate("/");
@@ -204,11 +180,11 @@ function Home() {
         {/* Footer Section */}
         <Row className="bg-light  text-center p-3 mt-5 justify-content-around align-items-center ">
           <Col xs={12} lg={3}>
-            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
+            <p className="fw-bold">Created by - PeaceCode</p>
           </Col>
           <Col xs={12} lg={3}>
             <p>
-              Matric Number: 190115010 <br /> Copyright © 2024
+             <br /> Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>
