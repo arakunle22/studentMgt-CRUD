@@ -18,11 +18,13 @@ app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
+    console.error("Validation error: Missing email or password in request body.");
     return res.status(400).send("Email and password are required.");
   }
 
-  console.log("Username:" + email);
-  console.log("Password:" + password);
+  console.log("Login attempt:");
+  console.log(`Email: ${email}`);
+  console.log(`Password: ${password}`); // For debugging only. Avoid logging sensitive info like passwords in production.
 
   const selectUser = `SELECT * FROM users WHERE email = $1 AND password = $2`;
   const values = [email, password];
@@ -31,18 +33,24 @@ app.post("/login", (req, res) => {
     .query(selectUser, values)
     .then((response) => {
       if (response.rows.length > 0) {
-        // User exists, login successful
+        console.log("Login successful for user:", email);
         res.send("Login successful.");
       } else {
-        // User not found, login failed
+        console.warn("Invalid login attempt:", email);
         res.status(401).send("Invalid email or password.");
       }
     })
     .catch((err) => {
-      console.error(`Error querying database: ${err}`);
+      console.error("Database query error:", {
+        message: err.message,
+        stack: err.stack,
+        query: selectUser,
+        values,
+      });
       res.status(500).send("Error logging in.");
     });
 });
+
 
 // Get all Student route
 
