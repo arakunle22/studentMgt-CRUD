@@ -184,11 +184,11 @@ function Home() {
           </Col>
           <Col xs={12} lg={3}>
             <p>
-             <br /> Copyright © 2024
+              Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>
-            <p>Department: Science and Technology (Computer option)</p>
+            <p>Science and Technology (Computer option)</p>
           </Col>
         </Row>
         {/* End Footer Section */}

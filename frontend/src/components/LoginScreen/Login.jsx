@@ -165,15 +165,15 @@ const Login = () => {
         {/* Footer Section */}
         <Row className="bg-primary text-white text-center p-3 mt-5 justify-content-around align-items-center ">
           <Col xs={12} lg={3}>
-            <p className="fw-bold">Created by - Ajayi Oluwatobiloba Deborah</p>
+            <p className="fw-bold">Created by - PeaceCode</p>
           </Col>
           <Col xs={12} lg={3}>
             <p>
-              Matric Number: 190115010 <br /> Copyright © 2024
+              Copyright © 2024
             </p>
           </Col>
           <Col xs={12} lg={3}>
-            <p>Department: Science and Technology (Computer option)</p>
+            <p> Science and Technology (Computer option)</p>
           </Col>
         </Row>
         {/* End Footer Section */}
