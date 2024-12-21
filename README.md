@@ -17,31 +17,31 @@ The Student Management System CRUD is a React-based web application designed to 
 - **Responsive Design:**
   - Fully responsive and mobile-friendly layout using Bootstrap.
 - **Secure Backend:**
-  - A Node.js backend with PostgreSQL database.
+  - A Node.js backend with PostgreSQL database hosted on render.
 
 ---
 
 ## Screenshots
 
 1. **Login Page**
-   ![Student Login Page](../screenshots/login-page.png)
-   ![Staff Login Page](../screenshots/staff-page.png)
+   ![Student Login Page](screenshots/login-page.png)
+   ![Staff Login Page](screenshots/staff-page.png)
    - A user-friendly login interface for both staff and students.
 
 2. **Home Page**
-   ![Home Page](../screenshots/home-page.png)
+   ![Home Page](screenshots/home-page.png)
    - A dashboard displaying student information and CRUD options.
 
 3. **Add Student**
-   ![Add Student](../screenshots/add-student.png)
+   ![Add Student](screenshots/add-student.png)
    - A form for adding new students to the system.
 
 4. **Students Page**
-   ![Students Page](../screenshots/student-page.png)
+   ![Students Page](screenshots/student-page.png)
    - A student page to access and print their result.
 
 5. **Delete Confirmation**
-   ![Delete Confirmation](../screenshots/delete-confirmation.png)
+   ![Delete Confirmation](screenshots/delete-confirmation.png)
    - A modal to confirm student deletion.
 
 ---
